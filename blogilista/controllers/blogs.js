@@ -58,8 +58,7 @@ blogsRouter.delete('/:id', async (request, response, next) => {
 
     await User
       .findById(blog.user)
-      .update(
-        {},
+      .updateOne(
         { $pull: { blogs: request.params.id } }
       )
     await Blog.deleteOne(blog)
