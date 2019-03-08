@@ -9,6 +9,7 @@ blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog
       .find({})
       .populate('user', { username: 1, name: 1 })
+      .populate('comments', { blog: 0 })
 
     return response.json(blogs)
   } catch (error) {
@@ -85,6 +86,7 @@ blogsRouter.put('/:id', async (request, response, next) => {
     const updatedBlog = await Blog
       .findByIdAndUpdate(request.params.id, newBlog, { new: true })
       .populate('user', { username: 1, name: 1 })
+      .populate('comments', { blog: 0 })
     return response.json(updatedBlog.toJSON())
   } catch (error) {
     return next(error)

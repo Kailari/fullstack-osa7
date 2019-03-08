@@ -1,0 +1,7 @@
+POST http://localhost:3003/api/blogs/5c822afefebc902415b81505/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Imphc2tham9rdSIsImlkIjoiNWM2YWMzZjQ1OTI2NGE1OTM0NmM3NGI5IiwiaWF0IjoxNTUyMDM1OTYyfQ.-n6F55aCsuGJCfY2OGR_MPnAnwclUEV2OXrhs_gilH8
+
+{
+    "content": "This IS awesome!"
+}
