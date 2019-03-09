@@ -28,17 +28,19 @@ const App = (props) => {
   const password = useField('text')
 
   let loadStage = 3
-  const nextLoadStage = () => {
+  const nextLoadStage = (stage) => {
     loadStage--
+    console.log(`loaded '${stage}' (${(3 - loadStage)}/3)`)
     if (loadStage === 0) {
       setLoaded(true)
     }
   }
 
   useEffect(() => {
-    props.initializeBlogs(nextLoadStage)
-    props.initializeUsers(nextLoadStage)
-    props.initializeUser(nextLoadStage)
+    console.log('Initializing resources...')
+    props.initializeBlogs(() => nextLoadStage('blogs'))
+    props.initializeUsers(() => nextLoadStage('users'))
+    props.initializeUser(() => nextLoadStage('login'))
   }, [])
 
   const loginForm = () => (
