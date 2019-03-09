@@ -60,6 +60,15 @@ const App = (props) => {
     </div>
   )
 
+  const ensureLogin = element => {
+    if (!user) {
+      props.showNotification('Please log in first', 'warn')
+      return <Redirect to="/" />
+    }
+
+    return element
+  }
+
   if (!loaded) {
     return (
       <div>
@@ -83,27 +92,39 @@ const App = (props) => {
           } />
 
           <Route exact path="/blogs" render={() =>
-            user ? <BlogList /> : <Redirect to="/" />
+            ensureLogin(<BlogList />)
           } />
 
-          <Route exact path="/blogs/:id" render={({ match }) =>
-            user
-              ? <BlogDetails target={props.blogs.find(b => b.id === match.params.id)} />
-              : <Redirect to="/" />
+          <Route exact path="/blogs/:id" render={({ match }) => {
+            const target = props.blogs.find(b => b.id === match.params.id)
+
+            if (!target) {
+              props.showNotification('Invalid blog ID', 'error')
+              return <Redirect to="/blogs" />
+            }
+
+            return ensureLogin(<BlogDetails target={target} />)
+          }
           } />
 
           <Route exact path="/create" render={() =>
-            user ? newBlogForm() : <Redirect to="/" />
+            ensureLogin(newBlogForm())
           } />
 
           <Route exact path="/users" render={() =>
-            user ? <UserList /> : <Redirect to="/" />
+            ensureLogin(<UserList />)
           } />
 
-          <Route exact path="/users/:id" render={({ match }) =>
-            user
-              ? <UserDetails target={props.users.find(u => u.id === match.params.id)} />
-              : <Redirect to="/" />
+          <Route exact path="/users/:id" render={({ match }) => {
+            const target = props.users.find(u => u.id === match.params.id)
+
+            if (!target) {
+              props.showNotification('Invalid user ID', 'error')
+              return <Redirect to="/users" />
+            }
+
+            return ensureLogin(<UserDetails target={target} />)
+          }
           } />
         </section>
         <footer>

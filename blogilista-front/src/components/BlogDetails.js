@@ -1,11 +1,11 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
-import { likeBlog } from '../reducers/blogsReducer'
+import { withRouter } from 'react-router-dom'
+import { likeBlog, removeBlog } from '../reducers/blogsReducer'
 import CommentForm from '../components/CommentForm'
 
 const BlogDetails = props => {
-  const { target } = props
+  const { user, target } = props
 
   const comments = () => {
     return (
@@ -20,10 +20,22 @@ const BlogDetails = props => {
     )
   }
 
+  const handleBack = event => {
+    event.preventDefault()
+    props.history.goBack()
+  }
+
+  const remove = () => {
+    if (window.confirm(`Remove blog '${target.title}' by ${target.author}?`)) {
+      props.removeBlog(target)
+      props.history.goBack()
+    }
+  }
+
   return (
     <div className="blog details">
       <div className="back">
-        <Link to="/blogs">{'<< back'}</Link>
+        <a href="#" onClick={handleBack}>{'<< back'}</a>
       </div>
       <h2>{target.title}</h2>
       <div className="blog subtitle">by {target.author}</div>
@@ -42,6 +54,12 @@ const BlogDetails = props => {
               <td>Added by</td>
               <td>{target.user.name}</td>
             </tr>
+            {user && user.id === target.user.id &&
+              <tr>
+                <td style={{ borderRight: 'none' }}><button onClick={remove}>Remove</button></td>
+                <td style={{ borderLeft: 'none' }}></td>
+              </tr>
+            }
           </tbody>
         </table>
       </div>
@@ -53,7 +71,13 @@ const BlogDetails = props => {
   )
 }
 
-export default connect(
-  null,
-  { likeBlog }
-)(BlogDetails)
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  }
+}
+
+export default withRouter(connect(
+  mapStateToProps,
+  { likeBlog, removeBlog }
+)(BlogDetails))

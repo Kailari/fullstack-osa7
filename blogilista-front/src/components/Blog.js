@@ -24,6 +24,9 @@ const Blog = props => {
   const blogLikes = () => <>
     {blog.likes} <button onClick={() => props.likeBlog(blog)}>Like</button>
   </>
+  const blogComments = () => <>
+    {blog.comments ? blog.comments.length : 0}
+  </>
   const removeButton = () => <>
     <button onClick={remove}>Remove</button>
   </>
@@ -37,6 +40,7 @@ const Blog = props => {
       <div style={showWhenVisible} className="details">
         URL: {blogLink()}<br />
         Likes: {blogLikes()}<br />
+        Comments: {blogComments()}<br />
         Added by {blog.user.username}<br />
         {user && user.id === blog.user.id && removeButton()}
       </div>

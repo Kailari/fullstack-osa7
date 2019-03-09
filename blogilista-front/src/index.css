@@ -71,15 +71,15 @@ footer {
 }
 
 
-.blog.details .back {
+.details .back {
     margin-top: 25px;
 }
 
-.blog.details {
+.details {
     width: 100%;
 }
 
-.blog.details h2 {
+.details h2 {
     margin-bottom: 0px;
     margin-top: 5px;
 }
@@ -126,6 +126,11 @@ footer {
 
 .notification.error {
     background-color: crimson;
+}
+
+.notification.warn {
+    background-color: yellow;
+    color: black;
 }
 
 .notification.ok {
