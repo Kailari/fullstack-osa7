@@ -25,7 +25,7 @@ const App = (props) => {
   const { user } = props
   const [loaded, setLoaded] = useState(false)
   const username = useField('text')
-  const password = useField('text')
+  const password = useField('password')
 
   let loadStage = 3
   const nextLoadStage = (stage) => {

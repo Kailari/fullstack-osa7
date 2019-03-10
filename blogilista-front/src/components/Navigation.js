@@ -1,12 +1,17 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import { logout } from '../reducers/loginReducer'
 
 const Navigation = props => {
+  const handleLogout = () => {
+    props.logout()
+    props.history.push('/')
+  }
+
   const userInfo = () => (
     <span className="userInfo">
-      Logged in as {props.user.username} <button onClick={props.logout}>Logout</button>
+      Logged in as {props.user.username} <button name="Logout" onClick={handleLogout}>Logout</button>
     </span>
   )
 
@@ -26,7 +31,7 @@ const mapStateToProps = state => {
   }
 }
 
-export default connect(
+export default withRouter(connect(
   mapStateToProps,
   { logout }
-)(Navigation)
+)(Navigation))
